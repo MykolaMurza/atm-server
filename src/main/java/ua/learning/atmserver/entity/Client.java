@@ -33,8 +33,16 @@ public class Client {
     private String phone;
 
     @Basic
+    @Column(name = "pin", nullable = false, length = 45)
+    private String pin;
+
+    @Basic
     @Column(name = "account_number", nullable = false, length = 52)
     private String accountNumber;
+
+    @Basic
+    @Column(name = "card_number", nullable = false, length = 16)
+    private String cardNumber;
 
     @OneToOne(mappedBy = "client")
     private Biometric biometric;
@@ -44,6 +52,9 @@ public class Client {
 
     @OneToMany(mappedBy = "client")
     private Collection<Transaction> transactions;
+
+    @OneToMany(mappedBy = "client")
+    private Collection<Otp> otpList;
 
     @Override
     public boolean equals(Object o) {

@@ -3,8 +3,8 @@ package ua.learning.atmserver.api.dto;
 import lombok.Data;
 
 @Data
-public class ClientBiometricsVerificationRequest {
+public class ClientOtpVerificationRequest {
     private int clientId;
     private int atmId;
-    private byte[] biometrics;
+    private byte[] otp;
 }

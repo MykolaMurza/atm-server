@@ -30,6 +30,9 @@ public class Atm {
     @OneToMany(mappedBy = "atm")
     private Collection<Transaction> transactions;
 
+    @OneToMany(mappedBy = "atm")
+    private Collection<Otp> otpList;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
