@@ -7,8 +7,7 @@ import ua.learning.atmserver.entity.AtmAuditLog;
 import ua.learning.atmserver.entity.Client;
 import ua.learning.atmserver.repository.AtmAuditLogRepository;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -18,7 +17,7 @@ public class AtmAuditor {
     public void log(String action, Client client, Atm atm) {
         AtmAuditLog log = new AtmAuditLog();
         log.setAction(action);
-        log.setTimestamp(Timestamp.from(Instant.now()));
+        log.setTimestamp(LocalDateTime.now());
         log.setClient(client);
         log.setAtm(atm);
         auditLogRepository.save(log);

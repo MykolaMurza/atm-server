@@ -3,6 +3,7 @@ package ua.learning.atmserver.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ua.learning.atmserver.entity.enums.Status;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -10,39 +11,37 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@Table(name = "clients")
 public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "client_id", nullable = false)
-    private int clientId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Basic
-    @Column(name = "first_name", nullable = false, length = 45)
-    private String firstName;
+    @Column(name = "name", nullable = false, length = 20)
+    private String name;
 
     @Basic
-    @Column(name = "last_name", nullable = false, length = 45)
-    private String lastName;
+    @Column(name = "surname", nullable = false, length = 20)
+    private String surname;
+
+    @Basic
+    @Column(name = "phone", nullable = false, length = 16)
+    private String phone;
 
     @Basic
     @Column(name = "email", nullable = false, length = 45)
     private String email;
 
     @Basic
-    @Column(name = "phone", nullable = false, length = 14)
-    private String phone;
+    @Column(name = "address", nullable = false)
+    private String address;
 
     @Basic
-    @Column(name = "pin", nullable = false, length = 45)
-    private String pin;
-
-    @Basic
-    @Column(name = "account_number", nullable = false, length = 52)
-    private String accountNumber;
-
-    @Basic
-    @Column(name = "card_number", nullable = false, length = 16)
-    private String cardNumber;
+    @Column(name = "status", nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToOne(mappedBy = "client")
     private Biometric biometric;
@@ -54,7 +53,7 @@ public class Client {
     private Collection<Transaction> transactions;
 
     @OneToMany(mappedBy = "client")
-    private Collection<Otp> otpList;
+    private Collection<Account> accounts;
 
     @Override
     public boolean equals(Object o) {
@@ -63,22 +62,20 @@ public class Client {
 
         Client client = (Client) o;
 
-        if (clientId != client.clientId) return false;
-        if (!Objects.equals(firstName, client.firstName)) return false;
-        if (!Objects.equals(lastName, client.lastName)) return false;
+        if (id != client.id) return false;
+        if (!Objects.equals(name, client.name)) return false;
+        if (!Objects.equals(surname, client.surname)) return false;
         if (!Objects.equals(email, client.email)) return false;
-        if (!Objects.equals(phone, client.phone)) return false;
-        return Objects.equals(accountNumber, client.accountNumber);
+        return Objects.equals(phone, client.phone);
     }
 
     @Override
     public int hashCode() {
-        int result = clientId;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (accountNumber != null ? accountNumber.hashCode() : 0);
         return result;
     }
 }

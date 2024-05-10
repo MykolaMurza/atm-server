@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.learning.atmserver.api.dto.TransactionRequest;
-import ua.learning.atmserver.entity.Transaction;
 import ua.learning.atmserver.service.AtmService;
 
 @RestController
@@ -16,9 +15,15 @@ public class TransactionController {
 
     private final AtmService atmService;
 
-    @PostMapping
-    public Transaction saveTransaction(@RequestBody TransactionRequest request) {
+    @PostMapping("/withdraw")
+    public boolean withdraw(@RequestBody TransactionRequest request) {
         return atmService.saveTransaction(request.getClientId(), request.getAtmId(),
-                request.getAmount(), request.getAction());
+                request.getAmount(), "WITHDRAW");
+    }
+
+    @PostMapping("/send")
+    public boolean send(@RequestBody TransactionRequest request) {
+        return atmService.saveTransaction(request.getClientId(), request.getAtmId(),
+                request.getAmount(), "SEND");
     }
 }

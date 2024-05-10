@@ -6,5 +6,5 @@ import ua.learning.atmserver.entity.Biometric;
 
 @Repository
 public interface BiometricRepository extends JpaRepository<Biometric, Integer> {
-    Biometric findBiometricByClientClientId(int clientId);
+    Biometric findBiometricByClientId(int clientId);
 }

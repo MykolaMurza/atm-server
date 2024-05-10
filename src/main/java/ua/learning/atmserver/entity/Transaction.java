@@ -4,35 +4,32 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "transactions")
 public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "transaction_id", nullable = false)
-    private int transactionId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Basic
     @Column(name = "amount", nullable = false)
     private int amount;
 
     @Basic
-    @Column(name = "type", nullable = false, length = 45)
-    private String type;
-
-    @Basic
     @Column(name = "timestamp", nullable = false)
-    private Timestamp timestamp;
+    private LocalDateTime timestamp;
 
-    @JoinColumn(name = "client_client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     @ManyToOne
     private Client client;
 
-    @JoinColumn(name = "atm_atm_id", nullable = false)
+    @JoinColumn(name = "atm_id", nullable = false)
     @ManyToOne
     private Atm atm;
 
@@ -43,19 +40,17 @@ public class Transaction {
 
         Transaction that = (Transaction) o;
 
-        if (transactionId != that.transactionId) return false;
+        if (id != that.id) return false;
         if (amount != that.amount) return false;
         if (!client.equals(that.client)) return false;
         if (!atm.equals(that.atm)) return false;
-        if (!Objects.equals(type, that.type)) return false;
         return Objects.equals(timestamp, that.timestamp);
     }
 
     @Override
     public int hashCode() {
-        int result = transactionId;
+        int result = id;
         result = 31 * result + amount;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
         result = 31 * result + client.hashCode();
         result = 31 * result + atm.hashCode();

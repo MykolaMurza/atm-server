@@ -9,17 +9,18 @@ import java.util.Arrays;
 @Entity
 @Getter
 @Setter
+@Table(name = "biometrics")
 public class Biometric {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "biometric_id", nullable = false)
-    private int biometricId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Basic
-    @Column(name = "biometric_data", nullable = false)
-    private byte[] biometricData;
+    @Column(name = "fingerprint", nullable = false)
+    private byte[] fingerprint;
 
-    @JoinColumn(name = "client_client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     @OneToOne
     private Client client;
 
@@ -30,16 +31,14 @@ public class Biometric {
 
         Biometric biometric = (Biometric) o;
 
-        if (biometricId != biometric.biometricId) return false;
-        if (!client.equals(biometric.client)) return false;
-        return Arrays.equals(biometricData, biometric.biometricData);
+        if (id != biometric.id) return false;
+        return Arrays.equals(fingerprint, biometric.fingerprint);
     }
 
     @Override
     public int hashCode() {
-        int result = biometricId;
-        result = 31 * result + Arrays.hashCode(biometricData);
-        result = 31 * result + client.hashCode();
+        int result = id;
+        result = 31 * result + Arrays.hashCode(fingerprint);
         return result;
     }
 }

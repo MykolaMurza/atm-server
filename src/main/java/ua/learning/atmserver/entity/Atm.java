@@ -10,28 +10,30 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
+@Table(name = "atms")
 public class Atm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "atm_id", nullable = false)
-    private int atmId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Basic
-    @Column(name = "location", nullable = false, length = 128)
+    @Column(name = "location", nullable = false)
     private String location;
 
     @Basic
     @Column(name = "manufacturer", nullable = false, length = 45)
     private String manufacturer;
 
+    @Basic
+    @Column(name = "version", nullable = false, length = 12)
+    private String version;
+
     @OneToMany(mappedBy = "atm")
     private Collection<AtmAuditLog> logs;
 
     @OneToMany(mappedBy = "atm")
     private Collection<Transaction> transactions;
-
-    @OneToMany(mappedBy = "atm")
-    private Collection<Otp> otpList;
 
     @Override
     public boolean equals(Object o) {
@@ -40,14 +42,14 @@ public class Atm {
 
         Atm atm = (Atm) o;
 
-        if (atmId != atm.atmId) return false;
+        if (id != atm.id) return false;
         if (!Objects.equals(location, atm.location)) return false;
         return Objects.equals(manufacturer, atm.manufacturer);
     }
 
     @Override
     public int hashCode() {
-        int result = atmId;
+        int result = id;
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (manufacturer != null ? manufacturer.hashCode() : 0);
         return result;
