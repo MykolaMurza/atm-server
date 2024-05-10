@@ -9,5 +9,5 @@ public interface AtmService {
 
     boolean saveTransaction(int clientId, int atmId, int amount, String action);
 
-    byte[] biometricsStatusAcknowledge(int clientId, int atmId, String cardNumber, boolean passed);
+    void biometricsStatusAcknowledge(int clientId, int atmId, String cardNumber, boolean passed);
 }

@@ -1,5 +1,6 @@
 package ua.learning.atmserver.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.learning.atmserver.entity.*;
@@ -58,6 +59,15 @@ public class AtmServiceImpl implements AtmService {
     }
 
     @Override
+    public void biometricsStatusAcknowledge(int clientId, int atmId, String cardNumber, boolean passed) {
+        Client client = clientRepository.getReferenceById(clientId);
+        Atm atm = atmRepository.getReferenceById(atmId);
+
+        atmAuditor.log("ACK", client, atm);
+    }
+
+    @Override
+    @Transactional
     public boolean saveTransaction(int clientId, int atmId, int amount, String action) {
         Client client = clientRepository.getReferenceById(clientId);
         Atm atm = atmRepository.getReferenceById(atmId);
@@ -72,10 +82,5 @@ public class AtmServiceImpl implements AtmService {
         transactionRepository.saveAndFlush(transaction);
 
         return true;
-    }
-
-    @Override
-    public byte[] biometricsStatusAcknowledge(int clientId, int atmId, String cardNumber, boolean passed) {
-        return new byte[0];
     }
 }

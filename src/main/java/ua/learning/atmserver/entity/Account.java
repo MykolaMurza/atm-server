@@ -1,7 +1,9 @@
 package ua.learning.atmserver.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ua.learning.atmserver.entity.enums.Status;
 
@@ -12,6 +14,8 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "accounts")
 public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

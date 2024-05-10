@@ -30,8 +30,8 @@ public class ClientController {
     }
 
     @PostMapping("/acknowledge")
-    public byte[] biometricsStatusAcknowledge(@RequestBody BiometricsStatusAcknowledgeRequest request) {
-        return atmService.biometricsStatusAcknowledge(request.getClientId(), request.getAtmId(),
+    public void biometricsStatusAcknowledge(@RequestBody BiometricsStatusAcknowledgeRequest request) {
+        atmService.biometricsStatusAcknowledge(request.getClientId(), request.getAtmId(),
                 request.getCardNumber(), request.isPassed());
     }
 }
